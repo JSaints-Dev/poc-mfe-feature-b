@@ -2,15 +2,20 @@ import { defineConfig } from 'vite'
 import react, { reactCompilerPreset } from '@vitejs/plugin-react'
 import babel from '@rolldown/plugin-babel'
 import tailwindcss from '@tailwindcss/vite'
-import tsConfigPaths from 'vite-tsconfig-paths'
+import { resolve } from 'path'
 
 export default defineConfig({
+  base: '/feature-b',
   plugins: [
     react(),
     babel({ presets: [reactCompilerPreset()] }),
     tailwindcss(),
-    tsConfigPaths(),
   ],
+  resolve: {
+    alias: {
+      '@app': resolve(__dirname, 'src'),
+    },
+  },
   server: {
     port: 3002,
     host: true,
