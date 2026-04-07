@@ -1,6 +1,9 @@
 // TODO: move to shared library
 import { useState } from 'react'
+import { Link } from 'react-router'
 import { clearToken } from '@app/utils/auth'
+
+const BASE_PATH = '/feature-b'
 
 const MENU = [
   { label: 'Home', href: '/', external: true },
@@ -66,15 +69,27 @@ export function Sidebar() {
               </button>
               {isOpen && (
                 <div className="ml-3 mt-1 flex flex-col gap-1">
-                  {item.children.map((child) => (
-                    <a
-                      key={child.label}
-                      href={child.href}
-                      className="px-3 py-1.5 rounded-md text-sm hover:bg-white/10 transition-colors opacity-90"
-                    >
-                      {child.label}
-                    </a>
-                  ))}
+                  {item.children.map((child) => {
+                    const isInternal = child.href.startsWith(BASE_PATH)
+                    const internalPath = child.href.replace(BASE_PATH, '') || '/'
+                    return isInternal ? (
+                      <Link
+                        key={child.label}
+                        to={internalPath}
+                        className="px-3 py-1.5 rounded-md text-sm hover:bg-white/10 transition-colors opacity-90"
+                      >
+                        {child.label}
+                      </Link>
+                    ) : (
+                      <a
+                        key={child.label}
+                        href={child.href}
+                        className="px-3 py-1.5 rounded-md text-sm hover:bg-white/10 transition-colors opacity-90"
+                      >
+                        {child.label}
+                      </a>
+                    )
+                  })}
                 </div>
               )}
             </div>
