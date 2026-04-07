@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/feature-b/assets/:path*",
+      "destination": "/assets/:path*"
+    },
+    {
+      "source": "/feature-b/:path*",
+      "destination": "/index.html"
+    }
+  ]
+}
